@@ -1,0 +1,313 @@
+<!-- CSS Stylesheets with Relative Paths -->
+
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Compatibility  Time!</title>
+
+  <!-- This line is money! It points your HTML to the CSS file. -->
+  <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- <div id ="showtime"> </div> -->
+    <!-- <section id = "filler"> <     -     > </section> -->
+    <section id="main">
+      <!-- JS stuff goes here!  Refer to Trivia.js for details! -->
+    </section>
+    
+    
+  </div>
+
+  <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
+  <link rel="stylesheet" href="assets/CSS/style.css">
+  <!-- <script src="notTrivia.js"></script> -->
+
+<script type="text/javascript">
+
+//CPAMed (copy, pasted, and modified) from HW5: Trivia
+let timerRunning = false;
+let wrongs = 0, rights = 0, totalQs = 10;
+let secElapsed = 0;
+let timeInterval = 1000;
+let surveyAnswerRay = [];
+
+function initializeGame()
+{
+    timerRunning = false;
+    wrongs = 0, rights = 0, totalQs = 10;
+    secElapsed = 0;
+    mainGameFunc();
+}
+
+function mainGameFunc()
+{
+    showTime();
+    $("#main").html(scoreboard);
+    // startTimer();
+}
+
+function scoreboard()
+{
+    return `<H2>COMPATIBILITY SURVEY TIME!</h2><b>Goal:</b>
+    Answer each question with a number corresponding to the degree to which you agree with the statement.  Be matched with someone in the database of similar temperaments!
+    <BR><BR>
+    
+    <b>Instructions:</b>
+    Click the radio button to the left of each of your answers.  When done with the survey, click the Submit button at the form's bottom!
+    <BR><BR>
+    <form>
+        <fieldset>
+            <legend>I prefer my friends intoxicated and my enemies irradiated.</legend>
+            <div>
+                <input type="radio" id="1" name="irradiated1" value="1"/>
+                <label for "1">1 (Strongly Disagree)</label>
+                <input type="radio" id="2" name="irradiated2" value="2"/>
+                <label for="2">2 (Disagree)</label>
+                <input type="radio" id="3" name="irradiated3" value="3" checked/>
+                <label for="3">3 (Neutral or Ambivalent)</label>
+                <input type="radio" id="4" name="irradiated4" value="4"/>
+                <label for="4">4 (Agree)</label>
+                <input type="radio" id="5" name="irradiated5" value="5"/>
+                <label for="5">5 (Strongly Agree)</label>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>I can count from 10 to -∞ by 27s.</legend>
+            <div>
+                <input type="radio" id="1" name="infinity1" value="1"/>
+                <label for "1">1 (Strongly Disagree)</label>
+                <input type="radio" id="2" name="infinity2" value="2"/>
+                <label for="2">2 (Disagree)</label>
+                <input type="radio" id="3" name="infinity3" value="3" checked/>
+                <label for="3">3 (Neutral or Ambivalent)</label>
+                <input type="radio" id="4" name="infinity4" value="4"/>
+                <label for="4">4 (Agree)</label>
+                <input type="radio" id="5" name="infinity5" value="5"/>
+                <label for="5">5 (Strongly Agree)</label>
+            </div>
+        </fieldset>
+        <fieldset>
+        <legend>I was born in the 1980s.</legend>
+            <div>
+                <input type="radio" id="1" name="1980s1" value="1"/>
+                <label for "1">1 (Strongly Disagree)</label>
+                <input type="radio" id="2" name="1980s2" value="2"/>
+                <label for="2">2 (Disagree)</label>
+                <input type="radio" id="3" name="1980s3" value="3" checked/>
+                <label for="3">3 (Neutral or Ambivalent)</label>
+                <input type="radio" id="4" name="1980s4" value="4"/>
+                <label for="4">4 (Agree)</label>
+                <input type="radio" id="5" name="1980s5" value="5"/>
+                <label for="5">5 (Strongly Agree)</label>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>I'd rather be playing video games right now.</legend>
+            <div>
+                <input type="radio" id="1" name="videogames1" value="1"/>
+                <label for "1">1 (Strongly Disagree)</label>
+                <input type="radio" id="2" name="videogames2" value="2"/>
+                <label for="2">2 (Disagree)</label>
+                <input type="radio" id="3" name="videogames3" value="3" checked/>
+                <label for="3">3 (Neutral or Ambivalent)</label>
+                <input type="radio" id="4" name="videogames4" value="4"/>
+                <label for="4">4 (Agree)</label>
+                <input type="radio" id="5" name="videogames5" value="5"/>
+                <label for="5">5 (Strongly Agree)</label>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>...</legend>
+            <div>
+                <input type="radio" id="1" name="dotdotdot1" value="1"/>
+                <label for "1">1 (Strongly Disagree)</label>
+                <input type="radio" id="2" name="dotdotdot2" value="2"/>
+                <label for="2">2 (Disagree)</label>
+                <input type="radio" id="3" name="dotdotdot3" value="3" checked/>
+                <label for="3">3 (Neutral or Ambivalent)</label>
+                <input type="radio" id="4" name="dotdotdot4" value="4"/>
+                <label for="4">4 (Agree)</label>
+                <input type="radio" id="5" name="dotdotdot5" value="5"/>
+                <label for="5">5 (Strongly Agree)</label>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Daddy, would you like some sausage?</legend>
+            <div>
+                <input type="radio" id="1" name="sausage1" value="1"/>
+                <label for "1">1 (Strongly Disagree)</label>
+                <input type="radio" id="2" name="sausage2" value="2"/>
+                <label for="2">2 (Disagree)</label>
+                <input type="radio" id="3" name="sausage3" value="3" checked/>
+                <label for="3">3 (Neutral or Ambivalent)</label>
+                <input type="radio" id="4" name="sausage4" value="4"/>
+                <label for="4">4 (Agree)</label>
+                <input type="radio" id="5" name="sausage5" value="5"/>
+                <label for="5">5 (Strongly Agree)</label>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>I like big butts and cannot lie.</legend>
+            <div>
+                <input type="radio" id="1" name="butts1" value="1"/>
+                <label for "1">1 (Strongly Disagree)</label>
+                <input type="radio" id="2" name="butts2" value="2"/>
+                <label for="2">2 (Disagree)</label>
+                <input type="radio" id="3" name="butts3" value="3" checked/>
+                <label for="3">3 (Neutral or Ambivalent)</label>
+                <input type="radio" id="4" name="butts4" value="4"/>
+                <label for="4">4 (Agree)</label>
+                <input type="radio" id="5" name="butts5" value="5"/>
+                <label for="5">5 (Strongly Agree)</label>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Animals belong either in the wild, in my service, or in my belly.</legend>
+            <div>
+                <input type="radio" id="1" name="animals1" value="1"/>
+                <label for "1">1 (Strongly Disagree)</label>
+                <input type="radio" id="2" name="animals2" value="2"/>
+                <label for="2">2 (Disagree)</label>
+                <input type="radio" id="3" name="animals3" value="3" checked/>
+                <label for="3">3 (Neutral or Ambivalent)</label>
+                <input type="radio" id="4" name="animals4" value="4"/>
+                <label for="4">4 (Agree)</label>
+                <input type="radio" id="5" name="animals5" value="5"/>
+                <label for="5">5 (Strongly Agree)</label>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>I didn't find Jesus.  He found me first.</legend>
+            <div>
+                <input type="radio" id="1" name="jesus1" value="1"/>
+                <label for "1">1 (Strongly Disagree)</label>
+                <input type="radio" id="2" name="jesus2" value="2"/>
+                <label for="2">2 (Disagree)</label>
+                <input type="radio" id="3" name="jesus3" value="3" checked/>
+                <label for="3">3 (Neutral or Ambivalent)</label>
+                <input type="radio" id="4" name="jesus4" value="4"/>
+                <label for="4">4 (Agree)</label>
+                <input type="radio" id="5" name="jesus5" value="5"/>
+                <label for="5">5 (Strongly Agree)</label>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>I earnestly believe this survey was a worthy use of my time.</legend>
+            <div>
+                <input type="radio" id="1" name="survey1" value="1"/>
+                <label for "1">1 (Strongly Disagree)</label>
+                <input type="radio" id="2" name="survey2" value="2"/>
+                <label for="2">2 (Disagree)</label>
+                <input type="radio" id="3" name="survey3" value="3" checked/>
+                <label for="3">3 (Neutral or Ambivalent)</label>
+                <input type="radio" id="4" name="survey4" value="4"/>
+                <label for="4">4 (Agree)</label>
+                <input type="radio" id="5" name="survey5" value="5"/>
+                <label for="5">5 (Strongly Agree)</label>
+            </div>
+        </fieldset>
+    </form>
+    <form id="submitbuttonform" class="button-size">
+        <button type="submit">Submit Survey!</button>
+    </form>`;
+}
+
+function startTimer()
+{
+  if(!timerRunning)
+  {
+    timeInterval = setInterval(countup, 1000);
+    timerRunning = true;
+  }
+}
+
+function showTime()
+{
+    $("#showtime").html("<h2>Sec Remaining: " + secElapsed + " </h2>");
+}
+
+function countup()
+{
+  secElapsed++;
+
+  showTime();
+
+  if (secElapsed <= 0)
+  {
+    gameOver();
+  }
+}
+
+function stopcountup()
+{
+  if(timerRunning)
+  {
+    secElapsed = 0;
+    clearInterval(timeInterval);
+    timerRunning = false;
+  }
+}
+
+function answerChecker()
+{
+    $("#createplan").on("submit", function(event) {
+    // Make sure to preventDefault on a submit event
+    event.preventDefault();
+    console.log("Submit button clicked!");
+
+    // [name=plan] will find an element with a "name" attribute equal to the string "plan"
+    // var newPlan = {
+    //   plan: $("#createplan [name=plan]").val().trim()
+    // };
+
+    // if(secElapsed <= 0)
+    {
+        if(document.getElementById("Andrew Johnson").checked)
+        {
+            rights++;
+        }
+        if(document.getElementById("JohnCoulton").checked)
+        {
+            rights++;
+        }
+        if(document.getElementById("Pokemon").checked)
+        {
+            rights++;
+        }
+        if(document.getElementById("Anything").checked)
+        {
+            rights++;
+        }
+        if(document.getElementById("AcceptingTheSacrificeOfChrist").checked)
+        {
+            rights++;
+        }
+    }
+    
+    wrongs = totalQs - rights;
+
+    alert("Game Over!\nWrong: " + wrongs + ", Right: " + rights);   
+}
+
+function gameOver()
+{
+    stopcountup();
+    answerChecker();
+    initializeGame();
+}
+
+// Start the game loop!
+initializeGame();
+</script>
+</body>
+</html>
